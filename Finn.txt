@@ -1,0 +1,70 @@
+PLAY [Create local user accounts on Linux servers] *****************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [10.10.1.56]
+ok: [10.10.1.57]
+
+PLAY [Create Desktop Users on Windows Hosts] ***********************************
+
+TASK [Create user DesktopUser1 on 10.10.1.35] **********************************
+ok: [10.10.1.29]
+ok: [10.10.1.35]
+ok: [10.10.1.36]
+ok: [10.10.1.43]
+
+PLAY [Create admin user on EXOS switches] **************************************
+
+TASK [Send command to create admin account 'Local-Admin'] **********************
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.10.1.22 should use 
+/usr/bin/python3, but is using /usr/bin/python for backward compatibility with 
+prior Ansible releases. A future Ansible release will default to using the 
+discovered platform python for this host. See https://docs.ansible.com/ansible/
+2.9/reference_appendices/interpreter_discovery.html for more information. This 
+feature will be removed in version 2.12. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+ok: [10.10.1.22]
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.10.1.32 should use 
+/usr/bin/python3, but is using /usr/bin/python for backward compatibility with 
+prior Ansible releases. A future Ansible release will default to using the 
+discovered platform python for this host. See https://docs.ansible.com/ansible/
+2.9/reference_appendices/interpreter_discovery.html for more information. This 
+feature will be removed in version 2.12. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+ok: [10.10.1.32]
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.10.1.31 should use 
+/usr/bin/python3, but is using /usr/bin/python for backward compatibility with 
+prior Ansible releases. A future Ansible release will default to using the 
+discovered platform python for this host. See https://docs.ansible.com/ansible/
+2.9/reference_appendices/interpreter_discovery.html for more information. This 
+feature will be removed in version 2.12. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+ok: [10.10.1.31]
+
+TASK [Show command output for verification] ************************************
+ok: [10.10.1.32] => {
+    "command_output.stdout_lines": [
+        "Note: Accounts created with this version of EXOS are not compatible with EXOS 21.x and earlier."
+    ]
+}
+ok: [10.10.1.31] => {
+    "command_output.stdout_lines": [
+        "Note: Accounts created with this version of EXOS are not compatible with EXOS 21.x and earlier."
+    ]
+}
+ok: [10.10.1.22] => {
+    "command_output.stdout_lines": [
+        "Note: Accounts created with this version of EXOS are not compatible with EXOS 21.x and earlier."
+    ]
+}
+
+PLAY RECAP *********************************************************************
+10.10.1.22                 : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.29                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.31                 : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.32                 : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.35                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.36                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.43                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.56                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.10.1.57                 : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
