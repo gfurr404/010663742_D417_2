@@ -1,0 +1,39 @@
+# Play 1: Create local user accounts on Linux servers
+- name: Create local user accounts on Linux servers
+  hosts: linux
+  become: yes
+  gather_facts: true
+
+  tasks:
+- name: Create Desktop Users on Windows Hosts
+  hosts: windows
+  gather_facts: false
+  vars:
+    win_user_map:
+      "10.10.1.35": "DesktopUser1"
+      "10.10.1.36": "DesktopUser2"
+      "10.10.1.43": "DesktopUser3"
+      "10.10.1.29": "DesktopUser4"
+  tasks:
+    - name: "Create user {{ win_user_map[inventory_hostname] }} on {{ inventory_hostname }}"
+      win_user:
+        name: "{{ win_user_map[inventory_hostname] }}"
+        password: "WGU123"
+        state: present
+        groups:
+          - Users
+
+# Play 3: Create a local admin user on EXOS switches
+- name: Create admin user on EXOS switches
+  hosts: exos
+  gather_facts: false
+
+  tasks:
+    - name: "Send command to create admin account 'Local-Admin'"
+      ansible.netcommon.cli_command:
+        command: "create account admin Local-Admin WGU123"
+      register: command_output
+
+    - name: Show command output for verification
+      debug:
+        var: command_output.stdout_lines
