@@ -1,10 +1,35 @@
-# Play 1: Create local user accounts on Linux servers
-- name: Create local user accounts on Linux servers
-  hosts: linux
+# Play 1: Create TestUser1 on Test_Box_1
+- name: Create TestUser1 on Test_Box_1
+  hosts: 10.10.1.56
   become: yes
-  gather_facts: true
+  gather_facts: false
 
   tasks:
+    - name: Create TestUser1 with sudo/admin rights
+      user:
+        name: TestUser1
+        password: "{{ 'WGU123' | password_hash('sha512') }}"
+        groups: sudo
+        append: yes
+        shell: /bin/bash
+        state: present
+
+# Play 2: Create TestUser2 on Test_Box_2
+- name: Create TestUser2 on Test_Box_2
+  hosts: 10.10.1.57
+  become: yes
+  gather_facts: false
+
+  tasks:
+    - name: Create TestUser2 with sudo/admin rights
+      user:
+        name: TestUser2
+        password: "{{ 'WGU123' | password_hash('sha512') }}"
+        groups: sudo
+        append: yes
+        shell: /bin/bash
+        state: present
+# Play I for to number: Create Users on Windows        
 - name: Create Desktop Users on Windows Hosts
   hosts: windows
   gather_facts: false
