@@ -1,10 +1,12 @@
 # Play 1: Create local user accounts on Linux servers
-- name: Create local user accounts on Linux servers
-  hosts: linux
-  become: yes
-  gather_facts: true
-
-  tasks:
+- name: "Create user {{ linux_user_map[ansible_host] }} on {{ inventory_hostname }}"
+  user:
+    name: "{{ linux_user_map[ansible_host] }}"
+    password: "{{ 'WGU123' | password_hash('sha512') }}"
+    groups: sudo
+    append: yes
+    shell: /bin/bash
+    state: present
 - name: Create Desktop Users on Windows Hosts
   hosts: windows
   gather_facts: false
