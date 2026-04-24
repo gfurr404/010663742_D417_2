@@ -1,29 +1,16 @@
-# Play 1: Create TestUser1 on Test_Box_1
-- name: Create TestUser1 on Test_Box_1
-  hosts: 10.10.1.56
+- name: Create Test Users on Linux Hosts
+  hosts: linux
   become: yes
   gather_facts: false
+  vars:
+    linux_user_map:
+      "10.10.1.56": "TestUser1"
+      "10.10.1.57": "TestUser2"
 
   tasks:
-    - name: Create TestUser1 with sudo/admin rights
+    - name: "Create user {{ linux_user_map[inventory_hostname] }} on {{ inventory_hostname }}"
       user:
-        name: TestUser1
-        password: "{{ 'WGU123' | password_hash('sha512') }}"
-        groups: sudo
-        append: yes
-        shell: /bin/bash
-        state: present
-
-# Play 2: Create TestUser2 on Test_Box_2
-- name: Create TestUser2 on Test_Box_2
-  hosts: 10.10.1.57
-  become: yes
-  gather_facts: false
-
-  tasks:
-    - name: Create TestUser2 with sudo/admin rights
-      user:
-        name: TestUser2
+        name: "{{ linux_user_map[inventory_hostname] }}"
         password: "{{ 'WGU123' | password_hash('sha512') }}"
         groups: sudo
         append: yes
